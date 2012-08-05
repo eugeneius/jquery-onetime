@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Onetime: disable buttons on submit</title>
+
+<style type="text/css">
+body { color: black; background: #f6f6f6; font-family: Helvetica, Arial, sans-serif }
+div#content { width: 900px; border: 1px solid #666; margin: 40px auto; padding: 10px 20px 30px; background: #fff }
+div#content h1 { margin: 10px 0 }
+div#content pre { background: #eee; border: 1px dashed #999; padding: 20px }
+img.loader { display: none }
+img#github { position: absolute; top: 0; right: 0; border: 0 }
+</style>
+
+<style type="text/css">
+code .keyword { font-weight: bold }
+code .string, code .regexp { color: green }
+code .class, code .special { color: blue }
+code .number { color: pink }
+code .comment { color: grey }
+</style>
+</head>
+<body>
+
+<div id="content">
+<h1>Onetime: disable buttons on submit</h1>
+
+
+<h2>Basic example</h2>
+
+<pre><code>$('#form1').onetime();</code></pre>
+
+<form id="form1" action="http://httpbin.org/delay/3">
+<input type="text" />
+<input type="submit" value="Submit" />
+</form>
+
+
+<h2>Show a loader image, change button text</h2>
+
+<pre><code>$('#form2').onetime({
+	loader: '#loader2',
+	text: "Please Wait..."
+});</code></pre>
+
+<form id="form2" action="http://httpbin.org/delay/3">
+<input type="text" />
+<img id="loader2" class="loader" src="loader.gif" alt="Loading..." />
+<input type="submit" value="Submit" />
+</form>
+
+
+<h2>Callback when form is disabled</h2>
+
+<pre><code>$('#form3').onetime({
+	disable: function() {
+		alert("Submitting the form, please do not click submit again!");
+	}
+});</code></pre>
+
+<form id="form3" action="http://httpbin.org/delay/3">
+<input type="text" />
+<img id="loader3" class="loader" src="loader.gif" alt="Loading..." />
+<input id="button3" type="submit" value="Submit" />
+</form>
+
+
+<h2>Per-button configuration</h2>
+
+<pre><code>$('#form4').onetime({
+	loader: '#loader4_save',
+	text: "Saving..."
+}, {
+	'#button4_cancel': {
+		loader: '#loader4_cancel',
+		text: "Canceling..."
+	}
+});</code></pre>
+
+<form id="form4" action="http://httpbin.org/delay/3">
+<input type="text" />
+<img id="loader4_save" class="loader" src="loader.gif" alt="Loading..." />
+<input id="button4_save" type="submit" value="Save" />
+<img id="loader4_cancel" class="loader" src="loader.gif" alt="Loading..." />
+<input id="button4_cancel" type="submit" value="Cancel" />
+</form>
+
+
+<h2>Combined with <a href="http://bassistance.de/jquery-plugins/jquery-plugin-validation/">jQuery.validate</a></h2>
+
+<pre><code>$('#form5').validate();
+$('#form5').onetime();
+</code></pre>
+
+<form id="form5" action="http://httpbin.org/delay/3">
+<input type="text" class="required" />
+<input type="submit" value="Submit" />
+</form>
+
+
+<h2>Readme</h2>
+
+<p>For more information, you can <a href="https://github.com/eugeneius/jquery-onetime#readme">view the readme on Github</a>.</p>
+
+</div>
+
+<a href="http://github.com/eugeneius/jquery-onetime"><img id="github" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+<script type="text/javascript" src="jquery.onetime.js"></script>
+<script type="text/javascript" src="hijs.js"></script>
+<script type="text/javascript">
+$(function() {
+	$('#form1').onetime();
+
+	$('#form2').onetime({
+		loader: '#loader2',
+		text: "Please Wait..."
+	});
+
+	$('#form3').onetime({
+		disable: function() {
+			alert("Submitting the form, please do not click submit again!");
+		}
+	});
+
+	$('#form4').onetime({
+		loader: '#loader4_save',
+		text: "Saving..."
+	}, {
+		'#button4_cancel': {
+			loader: '#loader4_cancel',
+			text: "Canceling..."
+		}
+	});
+
+	$('#form5').validate();
+	$('#form5').onetime();
+});
+</script>
+
+</body>
+</html>
